@@ -88,6 +88,7 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWraper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
     initAccordion() {
       const thisProduct = this;
@@ -144,15 +145,26 @@ const select = {
         // for every option in this category
         for(let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
-          const option = param.options[optionId];
+          const option = param.options[optionId],
+              imageClass = `.${paramId}-${optionId}`,
+              optionImage = thisProduct.imageWraper.querySelector(imageClass),
+              optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
-          if(formData[paramId] && formData[paramId].includes(optionId)) {
+          if(optionSelected) {
             if(!option.default) {
               price += option.price;
+            }
+
+            if(optionImage) {
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
             }
           } else {
             if(option.default) {
               price -= option.price;
+            }
+
+            if(optionImage) {
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
@@ -179,6 +191,7 @@ const select = {
     init: function(){
       const thisApp = this;
 
+      console.log('settings:', settings);
       thisApp.initData();
       thisApp.initMenu();
     },
