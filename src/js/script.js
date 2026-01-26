@@ -63,6 +63,7 @@ const select = {
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
     }
     renderInMenu() {
@@ -89,26 +90,28 @@ const select = {
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWraper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
+
     initAccordion() {
       const thisProduct = this;
 
-        /* START: add event listener to clickable trigger on event click */
-        thisProduct.accordionTrigger.addEventListener('click', function(event) {
-          /* prevent default action for event */
-          event.preventDefault();
+      /* START: add event listener to clickable trigger on event click */
+      thisProduct.accordionTrigger.addEventListener('click', function (event) {
+        /* prevent default action for event */
+        event.preventDefault();
 
-          /* find active product (product that has active class) */
-          const activeProduct = document.querySelector(select.all.menuProductsActive);
+        /* find active product (product that has active class) */
+        const activeProduct = document.querySelector(select.all.menuProductsActive);
 
-          /* if there is active product and it's not thisProduct.element, remove class active from it */
-          if(activeProduct && activeProduct !== thisProduct.element) {
-            activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
-          }
+        /* if there is active product and it's not thisProduct.element, remove class active from it */
+        if (activeProduct && activeProduct !== thisProduct.element) {
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+        }
 
-          /* toggle active class on thisProduct.element */
-          thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
-        });
+        /* toggle active class on thisProduct.element */
+        thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+      });
     }
     initOrderForm() {
       const thisProduct = this;
@@ -171,7 +174,16 @@ const select = {
       }
 
       // update calculated price in the HTML
+      price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
+    }
+    initAmountWidget(){
+      const thisProduct = this;
+      thisProduct.amountWidget = new AmountWIdget(thisProduct.amountWidgetElem);
+
+      thisProduct.amountWidgetElem.addEventListener('updated', function(event) {
+        thisProduct.processOrder();
+      });
     }
   }
 
@@ -196,6 +208,70 @@ const select = {
       thisApp.initMenu();
     },
   };
+
+  class AmountWIdget{
+    constructor(element) {
+      const thisWidget = this;
+
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructor arguments:', element);
+
+      thisWidget.getElements(element);
+
+      let value = settings.amountWidget.defaultValue;
+      if(thisWidget.input.value){
+        value = thisWidget.input.value
+      }
+      thisWidget.setValue(value);
+      thisWidget.initActions();
+    }
+    getElements(element){
+      const thisWidget = this;
+
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    setValue(value) {
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+
+      /* Validation */
+      if (thisWidget.value !== newValue
+          && !isNaN(newValue)
+          && newValue >= settings.amountWidget.defaultMin
+          && newValue <= settings.amountWidget.defaultMax) {
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
+
+      thisWidget.input.value = thisWidget.value;
+    }
+    initActions() {
+      const thisWidget = this;
+      thisWidget.input.addEventListener('change', function () {
+        thisWidget.setValue(thisWidget.input.value);
+      });
+      thisWidget.linkDecrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        const value = thisWidget.value - 1;
+        thisWidget.setValue(value);
+      });
+      thisWidget.linkIncrease.addEventListener('click', function(event) {
+        event.preventDefault();
+        const value = thisWidget.value + 1;
+        thisWidget.setValue(value);
+      });
+    }
+    announce() {
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+  }
 
   app.init();
 }
