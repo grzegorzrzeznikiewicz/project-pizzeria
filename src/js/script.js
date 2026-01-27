@@ -215,7 +215,7 @@
       const thisProduct = this;
       thisProduct.amountWidget = new AmountWIdget(thisProduct.amountWidgetElem);
 
-      thisProduct.amountWidgetElem.addEventListener('updated', function(event) {
+      thisProduct.amountWidgetElem.addEventListener('updated', function() {
         thisProduct.processOrder();
       });
     }
