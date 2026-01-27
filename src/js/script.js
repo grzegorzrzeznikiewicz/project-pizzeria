@@ -118,20 +118,22 @@
     getElements() {
       const thisProduct = this;
 
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-      thisProduct.imageWraper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      thisProduct.dom = [];
+
+      thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.dom.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.dom.formInputs = thisProduct.dom.form.querySelectorAll(select.all.formInputs);
+      thisProduct.dom.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.dom.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.dom.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.dom.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion() {
       const thisProduct = this;
 
       /* START: add event listener to clickable trigger on event click */
-      thisProduct.accordionTrigger.addEventListener('click', function (event) {
+      thisProduct.dom.accordionTrigger.addEventListener('click', function (event) {
         /* prevent default action for event */
         event.preventDefault();
 
@@ -149,18 +151,18 @@
     }
     initOrderForm() {
       const thisProduct = this;
-      thisProduct.form.addEventListener('submit', function(event){
+      thisProduct.dom.form.addEventListener('submit', function(event){
         event.preventDefault();
         thisProduct.processOrder();
       });
 
-      for(let input of thisProduct.formInputs){
+      for(let input of thisProduct.dom.formInputs){
         input.addEventListener('change', function(){
           thisProduct.processOrder();
         });
       }
 
-      thisProduct.cartButton.addEventListener('click', function(event){
+      thisProduct.dom.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
       });
@@ -169,7 +171,7 @@
       const thisProduct = this;
 
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
-      const formData = utils.serializeFormToObject(thisProduct.form);
+      const formData = utils.serializeFormToObject(thisProduct.dom.form);
 
       // set price to default price
       let price = thisProduct.data.price;
@@ -184,7 +186,7 @@
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId],
               imageClass = `.${paramId}-${optionId}`,
-              optionImage = thisProduct.imageWraper.querySelector(imageClass),
+              optionImage = thisProduct.dom.imageWrapper.querySelector(imageClass),
               optionSelected = formData[paramId] && formData[paramId].includes(optionId);
 
           if(optionSelected) {
@@ -209,14 +211,41 @@
 
       // update calculated price in the HTML
       price *= thisProduct.amountWidget.value;
-      thisProduct.priceElem.innerHTML = price;
+      thisProduct.dom.priceElem.innerHTML = price;
     }
     initAmountWidget(){
       const thisProduct = this;
-      thisProduct.amountWidget = new AmountWIdget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem);
 
-      thisProduct.amountWidgetElem.addEventListener('updated', function() {
+      thisProduct.dom.amountWidgetElem.addEventListener('updated', function() {
         thisProduct.processOrder();
+      });
+    }
+  }
+  class Cart{
+    constructor(element) {
+        const thisCart = this;
+
+        thisCart.products = [];
+
+        thisCart.getElements(element);
+        thisCart.initActions();
+
+        console.log('new Cart', thisCart);
+    }
+    getElements(element){
+        const thisCart = this;
+
+        thisCart.dom = [];
+
+        thisCart.dom.wrapper = element;
+        thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+    }
+    initActions(){
+      const thisCart = this;
+
+      thisCart.dom.toggleTrigger.addEventListener('click', function(){
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
   }
@@ -229,6 +258,12 @@
           new Product(productData, thisApp.data.products[productData]);
       }
     },
+    initCart: function() {
+      const thisApp = this;
+
+      const cartElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart(cartElem);
+    },
     initData: function () {
       const thisApp = this;
 
@@ -240,10 +275,11 @@
       console.log('settings:', settings);
       thisApp.initData();
       thisApp.initMenu();
+      thisApp.initCart();
     },
   };
 
-  class AmountWIdget{
+  class AmountWidget{
     constructor(element) {
       const thisWidget = this;
 
