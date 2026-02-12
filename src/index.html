@@ -7,6 +7,7 @@
   <title>Pizzeria</title>
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="vendor/rangeSlider/range-slider.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -21,6 +22,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#home">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
         </div>
@@ -62,6 +64,135 @@
   </header>
 
   <div id="pages">
+    <section id="home">
+      <div class="home-wrapper container">
+        <div class="boxes">
+          <div class="box" id="box-order">
+            <h3 class="box__title">Order Online</h3>
+          </div>
+          <div class="box" id="box-booking">
+            <h3 class="box__title">Book a Table</h3>
+          </div>
+        </div>
+        <div class="opening-hours">
+          <h2 class="opening-hours__title no-spacing">Opening Hours:</h2>
+          <p class="opening-hours__text no-spacing">Mon-Sun, 12PM - 11PM</p>
+        </div>
+        <div class="carousel">
+          <div class="carousel__item">
+            <i class="fas fa-quote-right carousel__icon"></i>
+            <h3 class="carousel__title">Amazing Service!</h3>
+            <p class="carousel__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam egestas leo ac sollicitudin hendrerit. In hac habitasse platea dictumst. Duis nec auctor tortor, eu dignissim augue.</p>
+            <p class="carousel__author">~ Margaret Osborne</p>
+          </div>
+          <div class="carousel__item">
+            <i class="fas fa-quote-right carousel__icon"></i>
+            <h3 class="carousel__title">Best Pizza in Town!</h3>
+            <p class="carousel__text">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.</p>
+            <p class="carousel__author">~ John Smith</p>
+          </div>
+          <div class="carousel__item">
+            <i class="fas fa-quote-right carousel__icon"></i>
+            <h3 class="carousel__title">Fantastic Atmosphere!</h3>
+            <p class="carousel__text">Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing.</p>
+            <p class="carousel__author">~ Emily Davis</p>
+          </div>
+        </div>
+        <div class="gallery">
+          <div class="gallery__item">
+            <img src="images/assets/pizza-1.jpg" alt="Gallery photo 1">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-2.jpg" alt="Gallery photo 2">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-3.jpg" alt="Gallery photo 3">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-4.jpg" alt="Gallery photo 4">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-5.jpg" alt="Gallery photo 5">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-6.jpg" alt="Gallery photo 6">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-7.jpg" alt="Gallery photo 7">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-8.jpg" alt="Gallery photo 8">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery__item">
+            <img src="images/assets/pizza-9.jpg" alt="Gallery photo 9">
+            <div class="gallery__overlay">
+              <div class="gallery__icons">
+                <span><i class="fas fa-heart"></i></span>
+                <span><i class="fas fa-comment"></i></span>
+                <span><i class="fas fa-share"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="gallery__follow"><a href="#">Follow us on Instagram</a></p>
+      </div>
+    </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
@@ -245,6 +376,7 @@
     </div>
   </script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="vendor/rangeSlider/range-slider.min.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>

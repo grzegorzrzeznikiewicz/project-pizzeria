@@ -11,6 +11,7 @@ export const select = {
     cart: '#cart',
     pages: '#pages',
     booking: '.booking-wrapper',
+    home: '.home-wrapper',
   },
   all: {
     menuProducts: '#product-list > .product',
@@ -50,6 +51,11 @@ export const select = {
     starters: '[name="starter"]',
     phone: '[name="phone"]',
     address: '[name="address"]',
+  },
+  home: {
+    boxOrder: '#box-order',
+    boxBooking: '#box-booking',
+    carousel: '.carousel',
   },
   nav: {
     links: '.main-nav a',
