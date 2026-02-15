@@ -7,6 +7,7 @@ class AmountWidget extends BaseWidgets {
     const thisWidget = this;
 
     thisWidget.getElements(element);
+    thisWidget.setValue(thisWidget.value);
     thisWidget.initActions();
   }
 
